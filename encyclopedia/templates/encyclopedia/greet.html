@@ -1,0 +1,16 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block body %}
+    {% if content == None %}
+        <h1> Error 404</h1>
+    {% else %}
+        {{content|safe}}
+    {% endif %}
+    
+    <a href="#"> Edit content</a>
+
+{% endblock %}

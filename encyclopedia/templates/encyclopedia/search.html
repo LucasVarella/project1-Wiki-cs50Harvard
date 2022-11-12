@@ -1,0 +1,23 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block body %}
+
+    <h5>Results to: {{data}}</h5>
+
+    <ul>
+   
+    {% for entry in result %}
+        <li><a href="{{entry}}">{{entry}}</a></li>
+    {% empty %}
+        <li>no Results</li>
+    {% endfor %}
+    
+    </ul>
+    
+    
+
+{% endblock %}
