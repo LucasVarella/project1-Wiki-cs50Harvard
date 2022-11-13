@@ -5,13 +5,14 @@
 {% endblock %}
 
 {% block body %}
+{{title}}
+{{content}}
 {{form}}
-<h4>Add a new page</h4>
-{{msg}}
-<form action="{% url 'newpage' %}" method="post">
-    <input class="new-page-input" type="text" placeholder={{title}} name="title" disabled>
-    <textarea placeholder="put here the informations" name="content" required></textarea>
+<h4>Edit page</h4>
+<form action="" method="post">
+    <table>{{form.as_table}}</table>
     <input type="submit" value="Save">
     {% csrf_token %}
 </form>
+    
 {% endblock %}

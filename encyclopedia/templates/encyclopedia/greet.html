@@ -11,6 +11,9 @@
         {{content|safe}}
     {% endif %}
     
-    <a href="#"> Edit content</a>
+    <form action="{% url 'edit' %}" method="post">
+    <input type="submit" value="Edit content">
+    {% csrf_token %}
+    </form>
 
 {% endblock %}

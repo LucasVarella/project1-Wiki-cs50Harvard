@@ -1,12 +1,15 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django import forms
-
+import time
 import random as rd
 import markdown2 as mk
 from . import util
+from encyclopedia.newform import NewForm
 
 data = ""
+global_title = ""
+
 
 def index(request):
     # Se for POST
@@ -36,11 +39,31 @@ def index(request):
         })
 
 def greet(request, title):
-    content = util.get_entry(title)
-    content= mk.markdown(content)
-    return render(request, "encyclopedia/greet.html", {
-        "title": title, "content": content
-   })
+
+    if request.method == "GET":
+        content = util.get_entry(title)   
+        content= mk.markdown(content)
+        global global_title 
+        global_title = title
+        return render(request, "encyclopedia/greet.html", {
+            "title": title, "content": content
+        })
+     
+
+def edit(request):
+
+    if request.method == "POST":
+        form = NewForm()
+        content = util.get_entry(global_title)
+
+
+        return render(request, "encyclopedia/edit.html", {
+            "title": global_title, "content": content, "form": form
+        })
+    
+
+    form = NewForm()
+    return render(request, "encyclopedia/edit.html", {"form": form})
 
 
 def newPage(request):
@@ -81,7 +104,3 @@ def random(request):
    })
 
 
-def edit(request):
-    return render(request, "encyclopedia/edit.html", {
-        "title": title
-   })
