@@ -1,5 +1,5 @@
 import re
-
+import csv
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 
@@ -20,11 +20,12 @@ def save_entry(title, content):
     it is replaced.
     """
     filename = f"entries/{title}.md"
-    if default_storage.exists(filename):
-        default_storage.delete(filename)
-    default_storage.save(filename, ContentFile(content))
-    
-    
+   # if default_storage.exists(filename):
+      #  default_storage.delete(filename)
+    #default_storage.save(filename, ContentFile(content))
+
+    with open (file=f"{filename}", mode="w", encoding="utf8", newline="") as fp:
+        fp.write(str(content).strip())
 
 
 def get_entry(title):

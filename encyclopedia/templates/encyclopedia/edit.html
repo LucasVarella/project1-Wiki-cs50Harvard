@@ -5,12 +5,19 @@
 {% endblock %}
 
 {% block body %}
-{{title}}
-{{content}}
-{{form}}
+
 <h4>Edit page</h4>
-<form action="" method="post">
-    <table>{{form.as_table}}</table>
+
+<form action="greet.html" method="post">
+    <table>
+        <tr>
+            <td><input type="text" value="{{title}}" name="" disabled></td>
+            <td><input type="text" value="{{title}}" name="title" hidden></td>
+        </tr>
+        <tr>
+            <td><textarea name="content" cols="45" >{{content|safe}}</textarea></td>
+        </tr>
+    </table>
     <input type="submit" value="Save">
     {% csrf_token %}
 </form>

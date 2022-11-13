@@ -1,11 +1,9 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django import forms
-import time
 import random as rd
 import markdown2 as mk
 from . import util
-from encyclopedia.newform import NewForm
 
 data = ""
 global_title = ""
@@ -48,23 +46,33 @@ def greet(request, title):
         return render(request, "encyclopedia/greet.html", {
             "title": title, "content": content
         })
-     
+
+    else:
+        title = request.POST['title']
+        content = request.POST['content']
+        content = str(content).strip()
+        util.save_entry(title, content)
+        content = util.get_entry(title)
+        content = mk.markdown(content)
+        return render(request, "encyclopedia/greet.html", {
+            "title": title, "content": content
+        })
 
 def edit(request):
 
     if request.method == "POST":
-        form = NewForm()
+        
         content = util.get_entry(global_title)
 
-
         return render(request, "encyclopedia/edit.html", {
-            "title": global_title, "content": content, "form": form
+            "title": global_title, "content": content
         })
     
     else:
 
-        form = NewForm()
-        return render(request, "encyclopedia/edit.html", {"form": form})
+        entries = util.list_entries()
+        return render(request, "encyclopedia/index.html", {
+            "entries": entries})
 
 
 def newPage(request):
@@ -78,6 +86,8 @@ def newPage(request):
                 content = "# "+title+"\n" +content
                 util.save_entry(title, content)
                 msg = "Saved Successfully"
+                global global_title 
+                global_title = title
                 return render(request, "encyclopedia/greet.html", {
             "content": mk.markdown(content)
         })
@@ -86,20 +96,20 @@ def newPage(request):
         else:
             msg = "Preencha"
 
-        
         return render(request, "encyclopedia/newpage.html", {
             "msg": msg
         })
 
-
-    return render(request, "encyclopedia/newpage.html")
+    else:
+        return render(request, "encyclopedia/newpage.html")
 
 def random(request):
     content_list = util.list_entries()
     random_title = rd.choice(content_list)
     random_content = util.get_entry(random_title)
     content = mk.markdown(random_content)
-    
+    global global_title 
+    global_title = random_title
     return render(request, "encyclopedia/greet.html", {
         "title": random_title, "content": content
    })
