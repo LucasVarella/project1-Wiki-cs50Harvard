@@ -61,9 +61,10 @@ def edit(request):
             "title": global_title, "content": content, "form": form
         })
     
+    else:
 
-    form = NewForm()
-    return render(request, "encyclopedia/edit.html", {"form": form})
+        form = NewForm()
+        return render(request, "encyclopedia/edit.html", {"form": form})
 
 
 def newPage(request):
