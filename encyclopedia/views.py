@@ -96,7 +96,7 @@ def newPage(request):
             else:
                 msg = "This title already exists"
         else:
-            msg = "Preencha"
+            msg = "Fill in both fields"
 
         return render(request, "encyclopedia/newpage.html", {
             "msg": msg
