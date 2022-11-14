@@ -7,14 +7,16 @@
 {% block body %}
 
     {% if content == None %}
-        <h1> Error 404</h1>
+        <h5> Page not found </h5>
     {% else %}
         {{content|safe}}
+
+        <form action="{% url 'edit' %}" method="post">
+            <input type="submit" value="Edit content">
+            {% csrf_token %}
+        </form>
     {% endif %}
     
-    <form action="{% url 'edit' %}" method="post">
-    <input type="submit" value="Edit content">
-    {% csrf_token %}
-    </form>
+    
 
 {% endblock %}

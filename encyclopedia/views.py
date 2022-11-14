@@ -8,7 +8,6 @@ from . import util
 data = ""
 global_title = ""
 
-
 def index(request):
     # Se for POST
     if request.method == "POST":
@@ -19,6 +18,8 @@ def index(request):
             if str(data).upper() == entrie.upper():
                 content = util.get_entry(data)
                 content = mk.markdown(content)
+                global global_title 
+                global_title = data
                 return render(request, "encyclopedia/greet.html", {
                     "title": data, "content": content
 
@@ -40,7 +41,8 @@ def greet(request, title):
 
     if request.method == "GET":
         content = util.get_entry(title)   
-        content= mk.markdown(content)
+        if content != None:
+            content= mk.markdown(content)
         global global_title 
         global_title = title
         return render(request, "encyclopedia/greet.html", {

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-<h4>Add a new page</h4>
+<h5>Add a new page</h5>
 {{msg}}
 <form action="{% url 'newpage' %}" method="post">
     <input class="new-page-input" type="text" placeholder="your title" name="title" required>
